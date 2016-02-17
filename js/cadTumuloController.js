@@ -10,7 +10,7 @@ angular.module('app', []).controller('cadTumuloController', function($scope) {
                         {id: "2", nome: "Triplo"}];    
         
         $scope.falecidos = [{nome: "", nascimento: "", falecimento: ""}];      
-        $scope.titulares = [{id: "", cpf: "", nome: ""},{id: "", cpf: "", nome: ""}];      
+        $scope.titulares = [{id: "", cpf: "", nome: "", celular: "", telefone: "", email: "" },{id: "", cpf: "", nome: "", celular: "", telefone: "", email: "" }];      
     }
     
     carregar();
@@ -38,6 +38,10 @@ angular.module('app', []).controller('cadTumuloController', function($scope) {
             if(titular.cpf == "11111111111"){
                 Materialize.toast("Titular Encontrado" ,1000);  
                 titular.nome = "Vitor Pola Baptista Coelho";
+                titular.id = 1;
+                titular.celular = "(12)99722-0224";
+                titular.telefone = "(12)3671-2197";
+                titular.email = "vitorpola@gmail.com";
             }
            
         }

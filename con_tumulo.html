@@ -15,7 +15,7 @@
     <script src="js/conTumuloController.js"></script>
 </head>
 <body>
-    <header ng-include="'menu.htm'"></header>
+    <header ng-include="'menu.html'"></header>
     <main ng-controller="conTumuloController">
         <div class="row">
             <div class="col s12 card ">
@@ -29,18 +29,20 @@
                             <input type="text" id="pesquisar" placeholder="Número" ng-model="numero"/>
                             <label for="pesquisar">Pesquisar:</label>
                         </div>
-                        <div class="input-field col s3">
-                            <select ng-model="cemiterio">
+                        <div class="col s3">
+                            <label >Cemitério</label>
+                            <select class="browser-default" ng-model="cemiterio">
                                 <option >Cemitério</option>
                                 <option value="1">Sagrado Coração de Jesus</option>
                                 <option value="2">Santíssimo</option>
                             </select>
                         </div>
-                        <div class="input-field col s1">
-                            <select ng-model="quadra">
-                            <option value="1">Quadra</option>
-                            <option value="1">A</option>
-                            <option value="2">B</option>
+                        <div class="col s1">
+                            <label >Quadra</label>
+                            <select ng-model="quadra" class="browser-default">
+                                <option value="1">Quadra</option>
+                                <option value="1">A</option>
+                                <option value="2">B</option>
                             </select>
                         </div>
                      </div>
