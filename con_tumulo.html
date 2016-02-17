@@ -1,0 +1,137 @@
+<!DOCTYPE html >
+<html lang="pt-br" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Cemitério</title>
+    
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/conTumuloController.js"></script>
+</head>
+<body>
+    <header ng-include="'menu.htm'"></header>
+    <main ng-controller="conTumuloController">
+        <div class="row">
+            <div class="col s12 card ">
+                <div class="titulo-card">
+                    <h4>Consulta de Túmulos</h4>
+                </div>
+                <div class="corpo-card ">
+                    <div class="row">
+                        <div class="input-field col s2 offset-s3 ">
+                             <i class="fa fa-search fa-lg prefix"></i>
+                            <input type="text" id="pesquisar" placeholder="Número" ng-model="numero"/>
+                            <label for="pesquisar">Pesquisar:</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <select ng-model="cemiterio">
+                                <option >Cemitério</option>
+                                <option value="1">Sagrado Coração de Jesus</option>
+                                <option value="2">Santíssimo</option>
+                            </select>
+                        </div>
+                        <div class="input-field col s1">
+                            <select ng-model="quadra">
+                            <option value="1">Quadra</option>
+                            <option value="1">A</option>
+                            <option value="2">B</option>
+                            </select>
+                        </div>
+                     </div>
+                        <hr>
+                     <div class="row">
+                        <div class="col s12">
+                            <table class="striped">
+                                <thead>
+                                    <tr>
+                                        <th class="waves-effect" >
+                                            <a ng-click="ordenar('numero')">Nº <i class="fa fa-sort"></i></a>
+                                        </th>
+                                        <th class="waves-effect">
+                                            <a  ng-click="ordenar('quadra')" href="#">Quadra <i class="fa fa-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            <a class="waves-effect" ng-click="ordenar('cemiterio')">Cemitério <i class="fa fa-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            <a class="waves-effect" ng-click="ordenar('responsavel')">Responsáveis <i class="fa fa-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            <a class="waves-effect" ng-click="ordenar('falecido')">Falecidos <i class="fa fa-sort"></i></a>
+                                        </th>
+                                        <th>
+                                            <a class="waves-effect" ng-click="ordenar('situacao')">Status <i class="fa fa-sort"></i></a>
+                                        </th>
+                                        <th >Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr  ng-repeat="t in tumulos | orderBy:ordenacao">
+                                    <td>{{t.numero}}</td>
+                                    <td>{{t.quadra}}</td>
+                                    <td>{{t.cemiterio.nome}}</td>
+                                    <td>{{t.responsavel}}</td>
+                                    <td>{{t.falecido}}</td>
+                                    <td class="green-text">{{t.situacao}}</td>
+                                    <td>
+                                        <a class="fa-stack modal-trigger" href="#modal1">
+                                            <span class="card">ver detalhes</span>
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-search fa-stack-1x fa-inverse"></i>
+                                        </a> 
+                                        <a class="fa-stack" href="#modal1">
+                                            <span class="card">editar</span>
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                                        </a>
+                                        <a class="fa-stack" href="#modal1">
+                                            <span class="card">pagamentos</span>
+                                            <i class="fa fa-square fa-stack-2x"></i>
+                                            <i class="fa fa-money fa-stack-1x fa-inverse"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="center" colspan="7">
+                                        <ul class="pagination">
+                                            <li class="disabled"><a href="#!"><i class="fa fa-chevron-left"></i></a></li>
+                                            <li class="active"><a href="#!">1</a></li>
+                                            <li class="waves-effect"><a href="#!">2</a></li>
+                                            <li class="waves-effect"><a href="#!">3</a></li>
+                                            <li class="waves-effect"><a href="#!">4</a></li>
+                                            <li class="waves-effect"><a href="#!">5</a></li>
+                                            <li class="waves-effect"><a href="#!"><i class="fa fa-chevron-right"></i></a></li>
+                                        </ul>
+                                    </td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                        <!-- Modal Structure -->
+                        <div id="modal1" class="modal modal-fixed-footer">
+                            <div class="modal-content">
+                            <h4>Modal Header</h4>
+                            <p>A bunch of text</p>
+                            </div>
+                            <div class="modal-footer">
+                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
+                            </div>
+                        </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        
+        <div ng-include="'menu.html'"></div>
+    </main>
+    
+</body>
+</html>

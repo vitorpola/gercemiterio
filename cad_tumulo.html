@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Cemitério</title>
+    
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/angular.min.js"></script>
+    
+
+</head>
+<body>
+    
+    <header ng-include="'menu.htm'"></header>
+    
+    <main  ng-controller="cadTumuloController">
+        <script src="js/cadTumuloController.js"></script>
+        <div class="row" >
+            <div class="col s12 card">
+                <div class="titulo-card">
+                    <h4>Cadastro de Túmulos</h4>
+                </div>
+                <div class="corpo-card ">
+                    <form name="formTumulo">    
+                        <div class="row">
+                            <div class="col s3 l3">
+                                <label>Cemitério</label>
+                                <select  class="browser-default" ng-model="tumulo.cemiterio">
+                                    <option ng-repeat="x in cemiterios" value="{{x.id}}">{{x.nome}}</option>
+                                </select>
+                            </div>
+                            <div class="col s1 l1">
+                                <label>Quadra</label>
+                                <select  class="browser-default" ng-model="tumulo.quadra">
+                                    <option ng-repeat="x in quadras" value="{{x.id}}">{{x.nome}}</option>
+                                </select>
+                            </div>
+                            <div class="input-field col s2 l2">
+                                <label for="num_tumulo">Nº do Túmulo</label>
+                                <input type="number" ng-model="tumulo.numero" placeholder="000"  />
+                            </div>
+                            <div class="col s2 l2">
+                                <label>Tipo</label>
+                                <select ng-model="tumulo.tipo" class="browser-default"  >
+                                    <option ng-repeat="x in tipos" value="{{x.id}}">{{x.nome}}</option>
+                                </select>
+                            </div>
+                            <div class="file-field input-field col s4">
+                                <div class="btn">
+                                    <span>Foto</span>
+                                    <input type="file" >
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" ng-model="tumulo.foto" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col s12"><h5>Titulares</h5></div>
+                            <div class="input-field col s4">
+                                <label for="cpf_titular_1">CPF</label>
+                                <input type="text" id="cpf_titular_1"/>
+                            </div>
+                            <div class="input-field col s8">
+                                <label for="nome_titular_1">Nome</label>
+                                <input type="text" id="nome_titular_1"/>
+                            </div>
+                            <div class="input-field col s4">
+                                <label for="cpf_titular_2">CPF</label>
+                                <input type="text" id="cpf_titular_2"/>
+                            </div>
+                            <div class="input-field col s8">
+                                <label for="nome_titular_2">Nome</label>
+                                <input type="text" id="nome_titular_2"/>
+                            </div>
+                        </div>   
+                        <hr />
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <h5>Falecido(s)</h5>
+                            </div>
+                            <div ng-repeat="falecido in falecidos" >
+                                <div class="input-field col s7">
+                                    <label >Nome</label>
+                                    <input type="text" ng-model="falecido.nome" />
+                                </div>
+                                <div class="input-field col s2">
+                                    <label >Nascimento</label>
+                                    <input type="text"  ng-model="falecido.nascimento" />
+                                </div>
+                                <div class="input-field col s2">
+                                    <label >Falecimento</label>
+                                    <input type="text"  ng-model="falecido.falecimento" />
+                                </div>
+                                <div class="col s1 center" style="line-height:80px;">
+                                    <a href="#" class="btn" ng-click="removeFalecido(falecido)"><i class="fa fa-trash"></i></a>
+                                </div>
+                            </div>
+                            <div class="col s12">
+                                <a href="#" class="btn" ng-click="addFalecido()">Adicionar Novo Falecido</a>    
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col s12 right-align">
+                                <a href="#" class="btn"  ng-click="cadastrar(tumulo)"><i class="fa fa-check-square-o fa-fw"></i> Cadastrar</a>
+                            </div>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>

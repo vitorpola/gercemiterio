@@ -1,0 +1,87 @@
+main{
+    position: relative;
+    display: block;
+    padding: 0px 40px;
+}
+
+
+
+@media only screen and (max-width: 992px) {
+  main {
+    margin-left: 0px;
+  }
+}
+
+@media only screen and (min-width: 993px) {
+  main {
+     margin-left: 220px;
+  }
+}
+
+.card.tumulo{
+    height: 2.5rem;
+    width: 2.8rem;
+    margin: 4px;
+    text-align: center;
+    line-height: 2.5rem;
+    position: static;
+    display: block;
+}
+
+.tumulos{
+    display: block;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.caixa-vazia{
+    height: 70%;
+}
+
+hr{
+    border: #ededed dashed 1px;
+}
+
+.titulo-card h4, .titulo-card h5{
+    color: #607d8b;
+}
+
+a.fa-stack{
+    color: #555;
+}
+
+a.fa-stack:hover{
+    color: #607d8b;
+}
+
+a.fa-stack span.card{
+    display: none;
+}
+
+a.fa-stack span.card::after{
+    content: "";
+    position: absolute;
+    width: 0; 
+    height: 0; 
+    top: 1.4em;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent; 
+    border-top:  10px solid #607d8b; 
+    left: 40px;
+}
+
+a.fa-stack:hover span.card{
+    display: block;
+    position: absolute;
+    top:-3.2em;
+    height: 20px;
+    line-height: 20px;
+    margin-left:-36px;
+    width: 100px;
+    text-align: center;
+    margin-top: 20px;
+    background-color: #607d8b;
+    color: #fff;
+}

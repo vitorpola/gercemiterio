@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Cemitério</title>
+    
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/angular.min.js"></script>
+        
+</head>
+
+<body>
+    
+    <header ng-include="'menu.htm'"></header>
+    <main>
+        <div class="row">
+            <div class="col s12 card ">
+                <div class="titulo-card">
+                    <h4>Cadastro de Titulares</h4>
+                </div>
+                <div class="corpo-card ">
+                     <div class="row">
+                         <div class="input-field col s8">
+                            <label for="nome_titular">Nome</label>
+                            <input type="text" id="nome_titular"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <label for="cpf_titular">CPF</label>
+                            <input type="text" id="cpf_titular"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <label for="tel_titular">Telefone</label>
+                            <input type="text" id="tel_titular"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <label for="cel_titular">Celular</label>
+                            <input type="text" id="cel_titular"/>
+                        </div>
+                        <div class="input-field col s4">
+                            <label for="email_titular">Email</label>
+                            <input type="text" id="email_titular"/>
+                        </div>
+                        <div class="input-field col s12">
+                            <label for="end_titular">Endereço</label>
+                            <input type="text" id="end_titular"/>
+                        </div>
+                   </div>
+                   <hr />
+                        <div class="row">
+                            <div class="col s12 right-align">
+                                <a href="#" class="btn blue-grey"><i class="fa fa-check-square-o fa-fw"></i> Cadastrar</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+</body>
+</html>
