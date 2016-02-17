@@ -1,17 +1,21 @@
 angular.module('app', []).controller('cadTumuloController', function($scope) {
-    $scope.cemiterios = [{id: "1", nome: "Sagrado Coração de Jesus", sigla: "SCJ"},
-                         {id: "2", nome: "Santíssimo", sigla: "SAN"}];
-                        
-    $scope.quadras = [{id: "1", nome: "A"},
-                      {id: "2", nome: "B"}];        
-                                 
-    $scope.tipos = [{id: "1", nome: "Simples"},
-                    {id: "2", nome: "Com grade"},
-                    {id: "3", nome: "Duplo"},
-                    {id: "2", nome: "Triplo"}];    
+    
+    function carregar() {
+        $scope.cemiterios = [{id: "1", nome: "Sagrado Coração de Jesus"},
+                         {id: "2", nome: "Santíssimo"}];
+                                    
+        $scope.tipos = [{id: "1", nome: "Simples"},
+                        {id: "2", nome: "Com grade"},
+                        {id: "3", nome: "Duplo"},
+                        {id: "2", nome: "Triplo"}];    
+        
+        $scope.falecidos = [{nome: "", nascimento: "", falecimento: ""}];      
+        $scope.titulares = [{id: "", cpf: "", nome: ""},{id: "", cpf: "", nome: ""}];      
+    }
+    
+    carregar();
                  
     var num = 1;
-    $scope.falecidos = [{nome: "", nascimento: "", falecimento: ""}];      
     
     
     $scope.addFalecido = function () {
@@ -27,14 +31,34 @@ angular.module('app', []).controller('cadTumuloController', function($scope) {
         $scope.falecidos.splice(index, 1);
         Materialize.toast("Falecido excluído" ,1000);  
     };
+    
+    $scope.buscarTitular = function(titular){
+        if(titular.cpf.length == 11){
+            
+            if(titular.cpf == "11111111111"){
+                Materialize.toast("Titular Encontrado" ,1000);  
+                titular.nome = "Vitor Pola Baptista Coelho";
+            }
+           
+        }
+    }
           
-    $scope.cadastrar = function(tumulo) {
+    $scope.cadastrar = function(tumulo, titulares, falecidos) {
         Materialize.toast("Cadastro realizado com sucesso!" , 2000, "ok");  
         console.log("ID CEMITÉRIO: "+tumulo.cemiterio);
         console.log("ID QUADRA: "+tumulo.quadra);
         console.log("NÚMERO: "+tumulo.numero);
         console.log("ID TIPO: "+tumulo.tipo);
-        console.log("FOTO: "+tumulo.foto);
+        var i;
+        for(i=0; i < titulares.length; i++){
+            console.log("TITULAR "+i+" :" + titulares[i].nome);
+        }
+        for(i=0; i < falecidos.length; i++){
+            console.log("FALECIDO "+i+" :" + falecidos[i].nome);
+        }
         delete $scope.tumulo;
+        delete $scope.titulares;
+        delete $scope.falecidos;
+        carregar();
     }   
 });
