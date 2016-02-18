@@ -32,19 +32,20 @@ angular.module('app', []).controller('cadTumuloController', function($scope) {
         Materialize.toast("Falecido excluído" ,1000);  
     };
     
-    $scope.buscarTitular = function(titular){
-        if(titular.cpf.length == 11){
+    $scope.buscarTitular = function(cpf){
             
-            if(titular.cpf == "11111111111"){
+            if(cpf == "111.111.111-11"){
                 Materialize.toast("Titular Encontrado" ,1000);  
                 titular.nome = "Vitor Pola Baptista Coelho";
                 titular.id = 1;
                 titular.celular = "(12)99722-0224";
                 titular.telefone = "(12)3671-2197";
                 titular.email = "vitorpola@gmail.com";
+            }else{
+                Materialize.toast("Titular Não Encontrado" + cpf ,1000, "err");
+                jQuery()  
             }
            
-        }
     }
           
     $scope.cadastrar = function(tumulo, titulares, falecidos) {
