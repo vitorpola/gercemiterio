@@ -12,6 +12,7 @@
     <script src="lib/materialize.min.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
     <script src="controllers/conTumuloController.js"></script>
 </head>
 <body>
@@ -26,40 +27,39 @@
                     <div class="row">
                         <div class="input-field col s2 offset-s3 ">
                              <i class="fa fa-search fa-lg prefix"></i>
-                            <input type="text" id="pesquisar" placeholder="Número" ng-model="numero"/>
+                            <input type="text" id="pesquisar" placeholder="Número" ng-model="pNumero"/>
                             <label for="pesquisar">Pesquisar:</label>
                         </div>
-                        <div class="col s3">
+                        <div class="input-field col s3">
+                            <select ng-model="pCemiterio" ng-options="c.id as c.nome for c in cemiterios">
+                                <option value="">Todos</option>
+                            </select>
                             <label >Cemitério</label>
-                            <select class="browser-default" ng-model="cemiterio">
-                                <option >Cemitério</option>
-                                <option value="1">Sagrado Coração de Jesus</option>
-                                <option value="2">Santíssimo</option>
-                            </select>
                         </div>
-                        <div class="col s1">
-                            <label >Quadra</label>
-                            <select ng-model="quadra" class="browser-default">
-                                <option value="1">Quadra</option>
-                                <option value="1">A</option>
-                                <option value="2">B</option>
+                        <div class="input-field col s1">
+                            <select ng-model="pQuadra" >
+                                <option value="">Todas</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
                             </select>
+                            <label >Quadra</label>
                         </div>
                      </div>
+                     {{pCemiterio}}
                         <hr>
                      <div class="row">
                         <div class="col s12">
                             <table class="striped">
                                 <thead>
                                     <tr>
-                                        <th class="waves-effect" >
-                                            <a ng-click="ordenar('numero')">Nº <i class="fa fa-sort"></i></a>
+                                        <th >
+                                            <a class="waves-effect" ng-click="ordenar('numero')">Nº <i class="fa fa-sort"></i></a>
                                         </th>
-                                        <th class="waves-effect">
-                                            <a  ng-click="ordenar('quadra')" href="#">Quadra <i class="fa fa-sort"></i></a>
+                                        <th >
+                                            <a  class="waves-effect" ng-click="ordenar('quadra')" href="#">Quadra <i class="fa fa-sort"></i></a>
                                         </th>
                                         <th>
-                                            <a class="waves-effect" ng-click="ordenar('cemiterio')">Cemitério <i class="fa fa-sort"></i></a>
+                                            <a class="waves-effect" ng-click="ordenar('cemiterio.nome')">Cemitério <i class="fa fa-sort"></i></a>
                                         </th>
                                         <th>
                                             <a class="waves-effect" ng-click="ordenar('responsavel')">Responsáveis <i class="fa fa-sort"></i></a>
@@ -75,10 +75,10 @@
                                 </thead>
 
                                 <tbody>
-                                <tr  ng-repeat="t in tumulos | orderBy:ordenacao">
+                                <tr  ng-repeat="t in tumulos | filter:{numero:pNumero, quadra: pQuadra, cemiterio: pCemiterio} | orderBy:ordenacao:direcao">
                                     <td>{{t.numero}}</td>
                                     <td>{{t.quadra}}</td>
-                                    <td>{{t.cemiterio.nome}}</td>
+                                    <td>{{t.cemiterio}}</td>
                                     <td>{{t.responsavel}}</td>
                                     <td>{{t.falecido}}</td>
                                     <td class="green-text">{{t.situacao}}</td>
@@ -100,18 +100,6 @@
                                         </a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="center" colspan="7">
-                                        <ul class="pagination">
-                                            <li class="disabled"><a href="#!"><i class="fa fa-chevron-left"></i></a></li>
-                                            <li class="active"><a href="#!">1</a></li>
-                                            <li class="waves-effect"><a href="#!">2</a></li>
-                                            <li class="waves-effect"><a href="#!">3</a></li>
-                                            <li class="waves-effect"><a href="#!">4</a></li>
-                                            <li class="waves-effect"><a href="#!">5</a></li>
-                                            <li class="waves-effect"><a href="#!"><i class="fa fa-chevron-right"></i></a></li>
-                                        </ul>
-                                    </td>
                                 </tbody>
                             </table>
                         </div>

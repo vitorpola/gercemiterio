@@ -85,3 +85,7 @@ a.fa-stack:hover span.card{
     background-color: #607d8b;
     color: #fff;
 }
+
+.input-field label{
+    width: 100%;
+} 

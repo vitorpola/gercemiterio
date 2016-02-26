@@ -9,58 +9,66 @@
     <link rel="stylesheet" href="css/main.css">
 
     <script src="lib/jquery-2.1.4.min.js"></script>
-    
-    <script src="lib/jquery.maskedinput.min.js"></script>
     <script src="lib/materialize.min.js"></script>
     <script src="lib/angular.min.js"></script>
-    <script src="js/main.js"></script>
     
+    <script src="js/app.js"></script>
+    <script src="controllers/cadTumuloController.js"></script>
+    <script src="directives/validarArquivo.js"></script>
+    <script src="directives/validarData.js"></script>
+    <script src="directives/validarSelect.js"></script>
+    <script src="directives/validarCpf.js"></script>
+    <script src="directives/validarNome.js"></script>
+    <script src="directives/validarNumTumulo.js"></script>
+    <script src="services/dbService.js"></script>
+
 </head>
 <body>
-    
     <header ng-include="'menu.html'"></header>
     
     <main ng-controller="cadTumuloController">
-        <script src="controllers/cadTumuloController.js"></script>
         <div class="row" >
             <div class="col s12 card">
                 <div class="titulo-card">
-                    <h4>Cadastro de Túmulos</h4>
+                    <h4>Cadastro de Túmulos</h4>{{teste}}
                 </div>
                 <div class="corpo-card ">
                     <form name="formTumulo">    
                         <div class="row">
-                            <div class="input-field col s4 l3">
-                                <select  ng-model="tumulo.cemiterio" ng-options="cemiterio.nome for cemiterio in cemiterios" ng-required="true" >
+                            <div class="col s4 l3" >
+                                <label id="lblCemiterio"><i class="fa fa-asterisk"></i> Cemitério</label>
+                                <select  ng-model="tumulo.cemiterio" autofocus
+                                 ng-required="true" ng-change="verificaNumero(tumulo.cemiterio.idCemiterio, tumulo.quadra, tumulo.numero)" ng-options="cemiterio.nome for cemiterio in cemiterios" class="browser-default" validar-select>
                                     <option value="">Selecione</option>
                                 </select>
-                                <label>Cemitério</label>
                             </div>
-                            <div class="input-field col s4 l2">
-                                <select  ng-model="tumulo.quadra" ng-required="true">
+                            <div class="col s4 l2" id="inputQuadra">
+                                <label class="active"><i class="fa fa-asterisk"></i> Quadra</label>
+                                <select ng-model="tumulo.quadra" ng-required="true" ng-change="verificaNumero(tumulo.cemiterio.idCemiterio, tumulo.quadra, tumulo.numero)" validar-select class="browser-default">
                                     <option value="">Selecione</option>
                                     <option value="A">A</option>
                                     <option value="B">B</option>
                                 </select>
-                                <label>Quadra</label>
                             </div>
                             <div class="input-field col s4 l1">
-                                <label for="num_tumulo">Número</label>
-                                <input type="number" ng-model="tumulo.numero" placeholder="000" required  />
+                                <input id="inputNumero" type="text" placeholder="000" ng-model="tumulo.numero" ng-required="true" ng-change="verificaNumero(tumulo.cemiterio.idCemiterio, tumulo.quadra, tumulo.numero)" validar-num-tumulo="true" />
+                                <label  class="active" id="labelNumero"><i class="fa fa-asterisk"></i> Número</label>
                             </div>
-                            <div class="input-field col s4 l2">
-                                <select ng-model="tumulo.tipo" ng-options="tipo.nome for tipo in tipos" required >
+                            <div class="col s4 l2" id="inputTipo">
+                                <label><i class="fa fa-asterisk"></i> Tipo</label>
+                                <select ng-model="tumulo.tipo" class="browser-default" ng-required="true" ng-options="tipo.nome for tipo in tipos" validar-select  >
                                     <option value="">Selecione</option>
                                 </select>   
-                                <label>Tipo</label>
                             </div>
+                            
                             <div class="file-field input-field col s8 l4">
-                                <div class="btn">
-                                    <span>Foto</span>
-                                    <input type="file" >
+                                <div class="btn" >
+                                    <span><i class="fa fa-picture-o"></i></span>
+                                    <input type="file" id="file" validar-arquivo>
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path" ng-model="tumulo.foto" type="text">
+                                    <input id="labelArquivo" class="file-path" ng-model="tumulo.foto" type="text" placeholder=" " ng-disabled="true">
+                                    <label class="active" for="labelArquivo" style="margin-left:60px;">Imagem</label>
                                 </div>
                             </div>
                         </div>
@@ -72,24 +80,24 @@
                             <div ng-repeat="titular in titulares" >
                                 <div class="row">
                                     <div class="input-field col s4 l2">
-                                        <label>CPF</label>
-                                        <input type="text" ng-model="titular.cpf" class="inputCpf" ng-keyup="buscarTitular(titular.cpf)"  placeholder=" " ng-required="$first"/>
+                                        <input id="cpf{{$index}}" type="text" ng-model="titular.cpf" ng-change="buscarTitular(titular, tumulo, $index)"  placeholder="999.999.999-99" ng-required="$first" validar-cpf />
+                                        <label id="lbl_cpf{{$index}}" class="active"><i class="fa fa-asterisk" ng-show="$first"></i> CPF</label>
                                     </div>
                                     <div class="input-field col s8 l4">
-                                        <label>Nome</label>
-                                        <input disabled type="text" ng-model="titular.nome" placeholder=" "/>
+                                        <label class="active">Nome</label>
+                                        <input class="titular{{$index}}" type="text" ng-model="titular.nome" placeholder=" " ng-disabled="true"/>
                                     </div>
                                     <div class="input-field col s4 l2">
-                                        <label>Telefone</label>
-                                        <input disabled type="text" ng-model="titular.telefone" placeholder=" "/>
+                                        <label class="active">Telefone</label>
+                                        <input class="titular{{$index}}" type="text" ng-model="titular.telefone" placeholder=" " ng-disabled="true"/>
                                     </div>
                                     <div class="input-field col s4 l2">
-                                        <label>Celular</label>
-                                        <input disabled type="text" ng-model="titular.celular" placeholder=" "/>
+                                        <label class="active">Celular</label>
+                                        <input class="titular{{$index}}" type="text" ng-model="titular.celular" placeholder=" " ng-disabled="true"/>
                                     </div>
                                     <div class="input-field col s4 l2">
-                                        <label>Email</label>
-                                        <input disabled type="text" ng-model="titular.email" placeholder=" "/>
+                                        <label class="active">Email</label>
+                                        <input class="titular{{$index}}" type="text" ng-model="titular.email" placeholder=" " ng-disabled="true"/>
                                     </div>
                                 </div>
                             </div>
@@ -101,27 +109,27 @@
                             </div>
                             <div ng-repeat="falecido in falecidos" >
                                 <div class="input-field col s5 l7">
-                                    <label >Nome</label>
-                                    <input type="text" ng-model="falecido.nome" />
+                                    <input type="text" ng-model="falecido.nome" class="validate" ng-required="true" placeholder=" " validar-nome/>
+                                    <label class="active" ><i class="fa fa-asterisk"></i> Nome</label>
                                 </div>
                                 <div class="input-field col s3 l2">
-                                    <label >Nascimento</label>
-                                    <input type="text"  ng-model="falecido.nascimento" />
+                                    <input placeholder="dd/mm/aaaa" ng-blur="verificaData(falecido.nascimento,falecido.falecimento,$index)"  ng-minlength="10" type="text" ng-model="falecido.nascimento" ng-required="true" validar-data/>
+                                    <label class="active"><i class="fa fa-asterisk"></i> Nascimento</label>
                                 </div>
                                 <div class="input-field col s3 l2">
-                                    <label >Falecimento</label>
-                                    <input type="text"  ng-model="falecido.falecimento" />
+                                    <input id="dt_fal_{{$index}}" ng-blur="verificaData(falecido.nascimento,falecido.falecimento,$index)" placeholder="dd/mm/aaaa"  ng-minlength="10" type="text" ng-model="falecido.falecimento" ng-required="true" validar-data/>
+                                    <label class="active"><i class="fa fa-asterisk"></i> Falecimento</label>
                                 </div>
-                                    <a href="#" class="btn col s1 l1" style="margin-top:20px;"  ng-click="removeFalecido(falecido)"><i class="fa fa-trash"></i></a>
+                                    <a href="#" class="btn col s1 l1" style="margin-top:20px;" ng-click="removeFalecido(falecido)"><i class="fa fa-trash"></i></a>
                             </div>
                             <div class="col s12">
-                                <a href="#" class="btn waves-effect waves-light" ng-click="addFalecido()">Adicionar Novo Falecido</a>    
+                                <a href="#" class="btn waves-effect waves-light" style="margin-top:20px;" ng-click="addFalecido()"><span class="fa fa-plus fa-fw"></span> Adicionar Falecido</a>    
                             </div>
                         </div>
                         <hr />
                         <div class="row">
                             <div class="col s12 right-align">
-                                <a href="#" class="btn"  ng-click="cadastrar(tumulo, titulares, falecidos)" ng-class="{disabled:formTumulo.$invalid}"><i class="fa fa-check-square-o fa-fw"></i> Cadastrar</a>
+                                <a class="btn" ng-click="cadastrarTumulo(tumulo, titulares, falecidos)" ng-class="{disabled:formTumulo.$invalid}" ><i class="fa fa-check-square-o fa-fw"></i> Cadastrar</a>
                             </div>
                         </div> 
                     </form>
@@ -130,5 +138,7 @@
         </div>
     </main>
     
+    
+    <script src="js/main.js"></script>
 </body>
 </html>
